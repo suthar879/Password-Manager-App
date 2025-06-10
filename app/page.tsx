@@ -5,8 +5,29 @@ import CreditCardSection from "@/components/creditCardSection";
 import ShowPaswordSection from "@/components/showPaswordSection";
 import ShowCardSection from "@/components/showCardSection";
 import { Shield } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+  const [cardData, setCardData] = useState([]);
+  const [passwordData, setPasswordData] = useState([]);
+  useEffect(() => {
+    const fetchMetadata = async () => {
+      const res = await fetch("/api/getUserMetaData");
+      const data = await res.json();
+
+      console.log("Private Metadata", data);
+      if (Array.isArray(data.cards) || Array.isArray(data.passwords)) {
+        setCardData(data.cards);
+        setPasswordData(data.passwords);
+      } else {
+        setCardData([]);
+        setPasswordData([]);
+      }
+    };
+
+    fetchMetadata();
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
@@ -32,10 +53,10 @@ const Home = () => {
           <CreditCardSection />
 
           {/* Your Passwords Section */}
-          <ShowPaswordSection />
+          <ShowPaswordSection passwords={passwordData || []} />
 
           {/* Your Cards Section */}
-          <ShowCardSection />
+          <ShowCardSection cards={cardData || []} />
         </div>
       </div>
     </div>

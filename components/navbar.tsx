@@ -136,7 +136,7 @@ const Navbar = () => {
                       avatarBox:
                         "h-8 w-8 rounded-full ring-2 ring-blue-500/20 hover:ring-blue-500/40 transition-all",
                       userButtonPopoverCard:
-                        "bg-white w-8 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg",
+                        "bg-white w-80 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg",
                       userButtonPopoverActions: "bg-white dark:bg-gray-800",
                       userButtonPopoverActionButton:
                         "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors",

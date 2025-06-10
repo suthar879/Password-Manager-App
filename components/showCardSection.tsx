@@ -1,9 +1,15 @@
-import { cardData } from "@/data/card";
 import { CreditCard, MoreVertical } from "lucide-react";
-import React, { useState } from "react";
+import React from "react";
 
-const ShowCardSection = () => {
-      const [cards, setCards] = useState(cardData);
+interface cardProps {
+  cvv: string;
+  cardNumber: string;
+  expiryDate: string;
+  cardHolderName: string;
+}
+
+const ShowCardSection = ({ cards }: { cards: cardProps[] }) => {
+  console.log("CARDS +>", cards);
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       <div className="flex items-center justify-between mb-6">
@@ -20,10 +26,13 @@ const ShowCardSection = () => {
         </span>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-3 h-30 overflow-auto">
+        {cards?.length === 0 && (
+          <h2 className="text-center">No saved Cards Record Found</h2>
+        )}
         {cards.map((card) => (
           <div
-            key={card.id}
+            key={card.cvv}
             className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-700/50 dark:to-gray-600/50 rounded-lg border border-gray-200 dark:border-gray-600 hover:from-gray-100 hover:to-gray-200 dark:hover:from-gray-700 dark:hover:to-gray-600 transition-all"
           >
             <div className="flex items-center space-x-3 flex-1">
@@ -32,17 +41,17 @@ const ShowCardSection = () => {
               </div>
               <div className="flex-1">
                 <div className="font-mono text-lg font-medium text-gray-900 dark:text-white">
-                  {card.number}
+                  {card.cardNumber}
                 </div>
                 <div className="text-sm text-gray-500 dark:text-gray-400">
-                  {card.name}
+                  {card.cardHolderName}
                 </div>
               </div>
             </div>
             <div className="flex items-center space-x-4">
               <div className="text-right">
                 <div className="text-sm font-medium text-gray-900 dark:text-white">
-                  {card.expiry}
+                  {card.expiryDate}
                 </div>
                 <div className="text-xs text-gray-500 dark:text-gray-400">
                   Expires

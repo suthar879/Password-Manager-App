@@ -1,12 +1,16 @@
-import { passwordData } from "@/data/password";
 import { Copy, Eye, EyeOff, Key, MoreVertical } from "lucide-react";
 import React, { useState } from "react";
 
-const ShowPaswordSection = () => {
+interface passwordProps {
+  website: string;
+  username: string;
+  password: string;
+}
+
+const ShowPaswordSection = ({ passwords }: { passwords: passwordProps[] }) => {
   const [showPassword, setShowPassword] = useState<{ [key: number]: boolean }>(
     {}
   );
-  const [passwords, setPasswords] = useState(passwordData);
 
   const togglePasswordVisibility = (id: number) => {
     setShowPassword((prev) => ({
@@ -35,14 +39,17 @@ const ShowPaswordSection = () => {
         </span>
       </div>
 
-      <div className="space-y-3">
-        {passwords.map((password) => (
+      <div className="space-y-3 h-50 overflow-auto">
+        {passwords?.length === 0 && (
+          <h2 className="text-center">No saved Password Record Found</h2>
+        )}
+        {passwords.map((password, index) => (
           <div
-            key={password.id}
+            key={index}
             className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
           >
             <div className="flex items-center space-x-3 flex-1">
-              <div className="text-2xl">{password.favicon}</div>
+              <div className="text-2xl">🔗</div>
               <div className="flex-1 min-w-0">
                 <div className="font-medium text-gray-900 dark:text-white truncate">
                   {password.website}
@@ -54,10 +61,10 @@ const ShowPaswordSection = () => {
             </div>
             <div className="flex items-center space-x-2">
               <button
-                onClick={() => togglePasswordVisibility(password.id)}
+                onClick={() => togglePasswordVisibility(index)}
                 className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
               >
-                {showPassword[password.id] ? (
+                {showPassword[index] ? (
                   <EyeOff className="h-4 w-4" />
                 ) : (
                   <Eye className="h-4 w-4" />
